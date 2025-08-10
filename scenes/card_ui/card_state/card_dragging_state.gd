@@ -17,9 +17,14 @@ func enter() -> void:
 	threshold_timer.timeout.connect(func() -> void: minimum_drag_time_elapsed = true)
 
 func on_input(event: InputEvent) -> void:
+	var is_single_targeted: bool = card_ui.card.is_single_targeted()
 	var is_mouse_motion: bool = event is InputEventMouseMotion
 	var is_cancel: bool = event.is_action_pressed("right_mouse")
 	var is_confirm: bool = event.is_action_released("left_mouse") or event.is_action_pressed("left_mouse")
+
+	if is_single_targeted and is_mouse_motion and card_ui.targets.size() > 0:
+		transition_requested.emit(self, CardState.State.AIMING)
+		return
 
 	if is_mouse_motion:
 		card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.pivot_offset
