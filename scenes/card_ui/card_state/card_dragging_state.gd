@@ -10,11 +10,14 @@ func enter() -> void:
 	if layer_exists:
 		card_ui.reparent(ui_layer)
 
-	card_ui.color.color = Color.NAVY_BLUE
-	card_ui.state.text = "DRAGGING"
-	
+	card_ui.panel.set("theme_override_styles/panel", card_ui.DRAGGING_STYLEBOX)
+	Events.card_drag_started.emit(card_ui)
+
 	var threshold_timer: SceneTreeTimer = get_tree().create_timer(DRAG_MINIMUM_THRESHOLD, false)
 	threshold_timer.timeout.connect(func() -> void: minimum_drag_time_elapsed = true)
+
+func exit() -> void:
+	Events.card_drag_finished.emit(card_ui)
 
 func on_input(event: InputEvent) -> void:
 	var is_single_targeted: bool = card_ui.card.is_single_targeted()

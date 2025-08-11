@@ -55,7 +55,7 @@ func _on_card_aim_finished(_card: CardUI) -> void:
 	current_card = null
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	if not current_card or is_targeting: return
+	if not current_card or not is_targeting: return
 
 	if not current_card.targets.has(area):
 		current_card.targets.append(area)

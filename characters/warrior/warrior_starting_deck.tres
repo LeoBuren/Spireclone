@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bah2c00i6j4a7" path="res://custom_resources/card.gd" id="1_8w230"]
 [ext_resource type="Script" uid="uid://dtdvmcb5fotqw" path="res://custom_resources/card_pile.gd" id="2_2wma6"]
-[ext_resource type="Resource" uid="uid://ce2o4fsas3tb0" path="res://characters/warrior/cards/warrior_block.tres" id="2_gobyu"]
-[ext_resource type="Resource" uid="uid://lhdvip1em8sm" path="res://characters/warrior/cards/warrior_axe_attack.tres" id="3_ne0bc"]
+[ext_resource type="Resource" uid="uid://ce2o4fsas3tb0" path="res://characters/warrior/cards/block/warrior_block.tres" id="2_gobyu"]
+[ext_resource type="Resource" uid="uid://lhdvip1em8sm" path="res://characters/warrior/cards/axe_attack/warrior_axe_attack.tres" id="3_ne0bc"]
 
 [resource]
 script = ExtResource("2_2wma6")
