@@ -33,6 +33,10 @@ func on_mouse_exited() -> void:
 	if current_state:
 		current_state.on_mouse_exited()
 
+func on_playable_changed(is_playable: bool) -> void:
+	if not current_state: return
+	current_state.on_playable_changed(is_playable)
+
 func _on_transition_requested(from: CardState, to: CardState.State) -> void:
 	if from != current_state: return
 	
@@ -44,4 +48,3 @@ func _on_transition_requested(from: CardState, to: CardState.State) -> void:
 	
 	new_state.enter()
 	current_state = new_state
-	

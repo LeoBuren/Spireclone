@@ -5,8 +5,9 @@ extends Panel
 
 @onready var label: Label = $Label
 
+#TODO: remove this
 func _ready() -> void:
-	char_stats.mana = char_stats.max_mana
+	char_stats.mana = 2
 
 func _set_char_stats(value: CharacterStats) -> void:
 	char_stats = value

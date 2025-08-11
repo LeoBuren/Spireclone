@@ -37,3 +37,6 @@ func on_input(event: InputEvent) -> void:
 	elif minimum_drag_time_elapsed and is_confirm:
 		get_viewport().set_input_as_handled()
 		transition_requested.emit(self, CardState.State.RELEASED)
+
+func on_playable_changed(_is_playable: bool) -> void:
+	pass

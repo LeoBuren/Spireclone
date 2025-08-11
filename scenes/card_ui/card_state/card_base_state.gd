@@ -9,21 +9,19 @@ func enter() -> void:
 
 	card_ui.reparent_request.emit(card_ui)
 	card_ui.pivot_offset = Vector2.ZERO
+	card_ui.panel.set("theme_override_styles/panel", card_ui.BASE_STYLEBOX)
 
 func on_gui_input(event: InputEvent) -> void:
-	if _card_disabled(): return
-	
 	if event.is_action_pressed("left_mouse"):
 		card_ui.pivot_offset = card_ui.get_global_mouse_position() - card_ui.global_position
 		transition_requested.emit(self, CardState.State.CLICKED)
 
 func on_mouse_entered() -> void:
-	if _card_disabled(): return
 	card_ui.panel.set("theme_override_styles/panel", card_ui.HOVER_STYLEBOX)
 	
 func on_mouse_exited() -> void:
-	if _card_disabled(): return
 	card_ui.panel.set("theme_override_styles/panel", card_ui.BASE_STYLEBOX)
 
-func _card_disabled() -> bool:
-	return not card_ui.is_playable or card_ui.is_disabled
+func on_playable_changed(is_playable: bool) -> void:
+	if is_playable: return
+	transition_requested.emit(self, CardState.State.DISABLED)

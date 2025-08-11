@@ -20,14 +20,8 @@ const HOVER_STYLEBOX: Resource = preload("res://card_hover_stylebox.tres")
 
 var parent: Control
 var tween: Tween
-var is_playable: bool = true: set = _set_playable
-var is_disabled: bool = false
 
 func _ready() -> void:
-	Events.card_aim_started.connect(_on_card_drag_or_aiming_started)
-	Events.card_drag_started.connect(_on_card_drag_or_aiming_started)
-	Events.card_aim_finished.connect(_on_card_drag_or_aiming_finished)
-	Events.card_drag_finished.connect(_on_card_drag_or_aiming_finished)
 	card_state_machine.init(self)
 
 func _input(event: InputEvent) -> void:
@@ -59,6 +53,9 @@ func _on_drop_point_detector_area_entered(area: Area2D) -> void:
 func _on_drop_point_detector_area_exited(area: Area2D) -> void:
 	targets.erase(area)
 
+func _on_char_stats_changed() -> void:
+	card_state_machine.on_playable_changed(char_stats.can_play_card(card))
+
 func _set_card(value: Card) -> void:
 	if not is_node_ready():
 		await ready
@@ -70,24 +67,3 @@ func _set_card(value: Card) -> void:
 func _set_char_stats(value: CharacterStats) -> void:
 	char_stats = value
 	char_stats.stats_changed.connect(_on_char_stats_changed)
-
-func _set_playable(value: bool) -> void:
-	is_playable = value
-	if is_playable:
-		cost.remove_theme_color_override("font_color")
-		icon.modulate = Color(1,1,1,1)
-		return
-
-	cost.add_theme_color_override("font_color", Color.RED)
-	icon.modulate = Color(1,1,1,0.5)
-
-func _on_card_drag_or_aiming_started(used_card: CardUI) -> void:
-	if used_card == self: return
-	is_disabled = true
-
-func _on_card_drag_or_aiming_finished(_card: CardUI) -> void:
-	is_disabled = false
-	self.is_playable = char_stats.can_play_card(card)
-
-func _on_char_stats_changed() -> void:
-	self.is_playable = char_stats.can_play_card(card)
